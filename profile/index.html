@@ -28,9 +28,12 @@
               <h2>Edit Profile</h2>
               <label for="name">Name</label>
               <input type="text" id="name" name="name" required>
-              <label for="avatar">Avatar</label>
-              <input type="file" id="avatar" name="avatar" required>
-              <button type="submit">Save</button>
+              <div class="file-upload">
+                <span class="file-upload-text">Avatar</span>
+                <button class="file-upload-button">Upload</button>
+                <input type="file" id="avatar" name="avatar" required>
+              </div>      
+              <button class="submit">Save</button>
             </form>
           </div>
     </main>
