@@ -39,27 +39,29 @@
         </div>  
       </div>
       <hr>
-      <div class="task">
-        <h1>Task 1qsqdfqsdf</h1>
-        <p class="points">20p</p>
-        <p class="tags">Tags: Elentriek, Loodgieterij</p>
-        <p class="description">This is a description about the task</p>
-        <button class="button">Complete</button>
-      </div>
-      <div class="task">
-        <h1>Task 2</h1>
-        <p class="points">20p</p>
-        <p class="tags">Tags: Elentriek</p>
-        <p class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo nihil maxime, dolor aperiam voluptas provident molestias iusto a error ducimus?</p>
-        <button class="button">Complete</button>
-      </div>
-      <div class="task">
-        <h1>Task 3</h1>
-        <p class="points">20p</p>
-        <p class="tags">Tags: Elentriek</p>
-        <p class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo nihil maxime, dolor aperiam voluptas provident molestias iusto a error ducimus?</p>
-        <button class="button">Complete</button>
-      </div>
+      <?php
+      
+      require_once("../controllers/DatabaseController.php");
+      $controller = new DatabaseController();
+      $controller->connect();
+      $tasks = $controller->getTasks();
+
+      foreach ($tasks as $task) {
+        $title = $task->getTitle();
+        $desc = $task->getDesc();
+        $points = $task->getPoints();
+        $dateAdded = $task->getDateAdded();
+        echo "
+        <div class='task'>
+            <h1>$title</h1>
+            <p class='points'>$points p</p>
+            <p class='tags'>Tags: Elentriek, Loodgieterij</p>
+            <p class='description'>$desc</p>
+            <button class='button'>Complete</button>
+        </div>
+        ";
+      }
+      ?>
     </main>
     <script src="../js/sidebar.js"></script>
     <script src="../js/filter.js"></script>
