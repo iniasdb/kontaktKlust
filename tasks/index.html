@@ -19,25 +19,49 @@
       </ul>
     </nav>
     <main>
+      <button class="button" id="filterToggleBtn">Show Filters</button>
+      <div class="filter">  
+          <label for="filter-tags">Filter by tags:</label>
+          <select id="filter-tags">
+            <option value="Elentriek">Elentriek</option>
+            <option value="Loodgieterij">Loodgieterij</option>
+          </select>
+          <label for="sort-by">Sort by:</label>
+          <select id="sort-by">
+            <option value="points">Points</option>
+            <option value="date">Date</option>
+          </select>
+          <button class="filterBtn">Filteren</button>
+        <div class="selected-tags">
+          <span class="tag">Tag 1</span>
+          <span class="tag">Tag 2</span>
+          <span class="tag">Tag 3</span>
+        </div>  
+      </div>
+      <hr>
       <div class="task">
         <h1>Task 1qsqdfqsdf</h1>
         <p class="points">20p</p>
+        <p class="tags">Tags: Elentriek, Loodgieterij</p>
         <p class="description">This is a description about the task</p>
         <button class="button">Complete</button>
       </div>
       <div class="task">
         <h1>Task 2</h1>
         <p class="points">20p</p>
+        <p class="tags">Tags: Elentriek</p>
         <p class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo nihil maxime, dolor aperiam voluptas provident molestias iusto a error ducimus?</p>
         <button class="button">Complete</button>
       </div>
       <div class="task">
         <h1>Task 3</h1>
         <p class="points">20p</p>
+        <p class="tags">Tags: Elentriek</p>
         <p class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo nihil maxime, dolor aperiam voluptas provident molestias iusto a error ducimus?</p>
         <button class="button">Complete</button>
       </div>
     </main>
     <script src="../js/sidebar.js"></script>
+    <script src="../js/filter.js"></script>
   </body>
 </html>
