@@ -21,23 +21,21 @@
     <main>
       <button class="button" id="filterToggleBtn">Show Filters</button>
       <div class="filter">  
-          <label for="filter-tags">Filter by tags:</label>
-          <select id="filter-tags">
+          <label for="filterTags">Filter by tags:</label>
+          <select id="filterTags">
+            <option value="">--------</option>
             <option value="Elentriek">Elentriek</option>
             <option value="Loodgieterij">Loodgieterij</option>
           </select>
-          <label for="sort-by">Sort by:</label>
-          <select id="sort-by">
+          <label for="sortBy">Sort by:</label>
+          <select id="sortBy">
+            <option value="dateAsc">Date Asc</option>
+            <option value="dateDesc">Date Desc</option>
             <option value="points">Points</option>
-            <option value="date">Date</option>
           </select>
-          <button class="filterBtn">Filteren</button>
-        <div class="selected-tags">
-          <span class="tag">Tag 1</span>
-          <span class="tag">Tag 2</span>
-          <span class="tag">Tag 3</span>
-        </div>  
+          <button class="filterBtn" id="filterBtn">Filteren</button>
       </div>
+      <div class="selectedTags" id="selectedTags"></div>  
       <hr>
       <?php
       
@@ -55,7 +53,8 @@
         <div class='task'>
             <h1>$title</h1>
             <p class='points'>$points p</p>
-            <p class='tags'>Tags: Elentriek, Loodgieterij</p>
+            <p class='dateAdded'>$dateAdded</p>
+            <p class='tags'>Tags: Loodgieterij</p>
             <p class='description'>$desc</p>
             <button class='button'>Complete</button>
         </div>
