@@ -19,13 +19,13 @@
       </ul>
     </nav>
     <main>
-        <form class="task-form">
+        <form class="task-form" action="task.php" method="post">
               <label for="title">Title:</label>
-              <input type="text" id="title" name="title" placeholder="Enter task title">
+              <input type="text" id="title" name="title" placeholder="Enter task title" required>
               <label for="points">Points:</label>
-              <input type="number" id="points" name="points" min="1" max="10" value="1">
+              <input type="number" id="points" name="points" min="1" required>
               <label for="description">Description:</label>
-              <textarea id="description" name="description" placeholder="Enter task description"></textarea>
+              <textarea id="description" name="description" placeholder="Enter task description" required></textarea>
             <button type="submit">Submit</button>
         </form>                  
     </main>
