@@ -1,5 +1,6 @@
 <?php
 require_once("../models/Task.php");
+require_once("../models/Tag.php");
 
 class DatabaseController {
     private $servername = "localhost";
@@ -21,31 +22,7 @@ class DatabaseController {
         $this->con->close();
     }
 
-    public function addTask($task) {
-        $title = $this->checkInput($task->getTitle());
-        $desc = $this->checkInput($task->getDesc());
-        $points = $this->checkInput($task->getPoints());
-        $stmt = $this->con->prepare("INSERT INTO `tasks`(`title`, `description`, `points`) VALUES (?,?,?)");
-        $stmt->bind_param("ssi", $title, $desc, $points);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    public function getTasks() {
-        $tasks = array();
-
-        $qresult = $this->con->query("SELECT * FROM tasks");
-        if ($qresult->num_rows > 0) {
-            while ($endresult = $qresult->fetch_assoc()) {
-                $task = new Task($endresult['title'], $endresult['description'], $endresult['points']);
-                $task->setDateAdded($endresult['dateAdded']);
-                $tasks[] = $task;
-            }
-        }
-        return $tasks;
-    }
-
-    private function checkInput($input) {
+    protected function checkInput($input) {
         $input = trim($input);
         $input = stripslashes($input);
         $input = htmlspecialchars($input);

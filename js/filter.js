@@ -26,16 +26,19 @@ function toggleForm() {
 }
 
 filterTags.addEventListener("change", () => {
-    tag = filterTags.value;
+    // tag = filterTags.value;
+    tag = filterTags.options[filterTags.selectedIndex].text;
     if (tag) {
         if (!selectedTags.includes(tag)) {
             selectedTags.push(tag);
 
-            let dateSpan = document.createElement('span');
-            dateSpan.classList.add("tag");
-            dateSpan.innerHTML = tag;
+            let tagSpan = document.createElement('span');
+            tagSpan.classList.add("tag");
+            // let selectedText = filterTags.options[filterTags.selectedIndex].text;
+            // tagSpan.innerHTML = selectedText;
+            tagSpan.innerHTML = tag;
             
-            selectedTagsElement.appendChild(dateSpan)
+            selectedTagsElement.appendChild(tagSpan)
             refreshTags();
             filterTags.value = "";
         }
@@ -74,7 +77,8 @@ function refreshTags() {
     selectedTag = document.querySelectorAll(".tag")
     selectedTag.forEach(tag => {
         tag.addEventListener("click", () => {
-            selectedTags.pop(tag.innerHTML);
+            let index = selectedTags.indexOf(tag.innerHTML);
+            selectedTags.splice(index, 1);
             selectedTagsElement.removeChild(tag);
             filter();
         })
