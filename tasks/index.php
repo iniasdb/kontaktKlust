@@ -64,18 +64,14 @@ $tags = $controller->getTags();
             <p class='dateAdded'>$dateAdded</p>
             <p class='tags'>Tags: ";
         
-        foreach ($tags as $tag) {
-          echo $tag->getName();
-
-          // PHP 7.3 and newer
-          // My version of USBWebserver is still on v7.1 --> must upgrade asap
-          // TODO: swap in production!!!
-          // if (!$tag = array_key_last($tags)) {
-          //   echo ", ";
-          // }
-          // TODO: Delete line below in production
-          echo ", ";
-        }
+            $last = array_key_last($tags);
+            foreach ($tags as $tag) {
+              echo $tag->getName();
+              
+              if ($tags[$last] != $tag) {
+                echo ", ";
+              }
+            }
 
         echo "
             </p>
@@ -90,3 +86,7 @@ $tags = $controller->getTags();
     <script src="<?=$root?>js/filter.js"></script>
   </body>
 </html>
+
+<?php
+$controller->close();
+?>

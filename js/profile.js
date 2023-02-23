@@ -3,7 +3,6 @@ let editForm = document.querySelector("#editForm");
 let showing = false;
 
 editButton.addEventListener("click", (e) => {
-    console.log("ja");
     if (showing) {
         editForm.style.display = "none";
         editButton.innerHTML = "Edit Profile"

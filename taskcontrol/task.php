@@ -15,7 +15,6 @@ $task->setId($taskId);
 $tags = explode(",", $_POST['tags']);
 foreach ($tags as $t) {
     $tag = new Tag($t, $taskId);
-    echo $tag->getId();
     $controller->addTaskTag($task, $tag);
 }
 

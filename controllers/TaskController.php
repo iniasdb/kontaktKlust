@@ -7,24 +7,23 @@ class TaskController extends DatabaseController {
         $title = $this->checkInput($task->getTitle());
         $desc = $this->checkInput($task->getDesc());
         $points = $this->checkInput($task->getPoints());
-        
-        $stmt = $this->con->prepare("INSERT INTO `tasks`(`title`, `description`, `points`) VALUES (?,?,?)");
-        $stmt->bind_param("ssi", $title, $desc, $points);
+
+        $stmt = $this->con->prepare("INSERT INTO `tasks`(`title`, `description`, `points`) VALUES (:title, :description, :points)");
+        $stmt->bindParam(":title", $title); 
+        $stmt->bindParam(":description", $desc);
+        $stmt->bindParam(":points", $points);
         $stmt->execute();
-        $stmt->close();
     }
 
     public function getTasks() {
         $tasks = array();
 
-        $qresult = $this->con->query("SELECT * FROM tasks");
-        if ($qresult->num_rows > 0) {
-            while ($endresult = $qresult->fetch_assoc()) {
-                $task = new Task($endresult['title'], $endresult['description'], $endresult['points']);
-                $task->setId($endresult['id']);
-                $task->setDateAdded($endresult['dateAdded']);
-                $tasks[] = $task;
-            }
+        $stmt = $this->con->query("SELECT * FROM tasks");
+        while ($qresult = $stmt->fetch()) {
+            $task = new Task($qresult['title'], $qresult['description'], $qresult['points']);
+            $task->setId($qresult['id']);
+            $task->setDateAdded($qresult['dateAdded']);
+            $tasks[] = $task;
         }
         return $tasks;
     }
@@ -35,29 +34,28 @@ class TaskController extends DatabaseController {
         $desc = $this->checkInput($task->getDesc());
         $points = $this->checkInput($task->getPoints());
 
-        $stmt = $this->con->prepare("SELECT id FROM tasks WHERE title = ? AND description = ? AND points = ?");
-        $stmt->bind_param("ssi", $title, $desc, $points);
+        $stmt = $this->con->prepare("SELECT id FROM tasks WHERE title = :title AND description = :description AND points = :points");
+        $stmt->bindParam(":title", $title);
+        $stmt->bindParam(":description", $desc);
+        $stmt->bindParam(":points", $points);
         $stmt->execute();
 
-        $qresult = $stmt->get_result();
-        if ($qresult->num_rows > 0) {
-            $id = $qresult->fetch_array()[0];
+        while ($qresult = $stmt->fetch()) {
+            $id = $qresult['id'];
         }
 
-        $stmt->close();
         return $id;
     }
 
     public function getTags() {
         $tags = array();
 
-        $qresult = $this->con->query("SELECT * FROM tags");
-        if ($qresult->num_rows > 0) {
-            while ($endresult = $qresult->fetch_assoc()) {
-                $tag = new Tag($endresult['id'], $endresult['name']);
-                $tags[] = $tag;
-            }
+        $stmt = $this->con->query("SELECT id, name FROM tags");
+        while ($qresult = $stmt->fetch()) {
+            $tag = new Tag($qresult['id'], $qresult['name']);
+            $tags[] = $tag;
         }
+
         return $tags;
     }
 
@@ -67,25 +65,21 @@ class TaskController extends DatabaseController {
 
         $taskId = $this->checkInput($task->getId());
 
-        $stmt = $this->con->prepare("SELECT tagId FROM taglink WHERE taskId = ?");
-        $stmt->bind_param("i", $taskId);
+        $stmt = $this->con->prepare("SELECT tagId FROM taglink WHERE taskId = :taskId");
+        $stmt->bindParam("taskId", $taskId);
         $stmt->execute();
 
-        $qresult = $stmt->get_result();
-        if ($qresult->num_rows > 0) {
-            while ($endresult = $qresult->fetch_array()) {
-                $tagIds[] = $endresult[0];
-            }
+        while ($qresult = $stmt->fetch()) {
+            $tagIds[] = $qresult['tagId'];
         }
 
         foreach ($tagIds as $id) {
-            $stmt = $this->con->prepare("SELECT name FROM tags WHERE id = ?");
-            $stmt->bind_param("i", $id);
+            $stmt = $this->con->prepare("SELECT name FROM tags WHERE id = :tagId");
+            $stmt->bindParam(":tagId", $id);
             $stmt->execute();
 
-            $qresult = $stmt->get_result();
-            if ($qresult->num_rows > 0) {
-                $name = $qresult->fetch_array()[0];
+            while ($qresult = $stmt->fetch()) {
+                $name = $qresult['name'];
                 $tag = new Tag($id, $name);
                 $tags[] = $tag;
             }
@@ -98,10 +92,10 @@ class TaskController extends DatabaseController {
         $taskId = $this->checkInput($task->getId());
         $tagId = $this->checkInput($tag->getId());
 
-        $stmt = $this->con->prepare("INSERT INTO `taglink`(`taskId`, `tagId`) VALUES (?,?)");
-        $stmt->bind_param("ii", $taskId, $tagId);
+        $stmt = $this->con->prepare("INSERT INTO `taglink`(`taskId`, `tagId`) VALUES (:taskId, :tagId)");
+        $stmt->bindParam("taskId", $taskId);
+        $stmt->bindParam("tagId", $tagId);
         $stmt->execute();
-        $stmt->close();
     }
 }
 
